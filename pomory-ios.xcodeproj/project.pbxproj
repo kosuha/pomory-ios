@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		8EAC21A129D1A0CE00659F63 /* pomory_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAC21A029D1A0CE00659F63 /* pomory_iosApp.swift */; };
-		8EAC21A329D1A0CE00659F63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAC21A229D1A0CE00659F63 /* ContentView.swift */; };
 		8EAC21A529D1A0CF00659F63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EAC21A429D1A0CF00659F63 /* Assets.xcassets */; };
 		8EAC21A829D1A0CF00659F63 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EAC21A729D1A0CF00659F63 /* Preview Assets.xcassets */; };
+		8EE9E3F929D1AE60001FBAD0 /* MainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE9E3F829D1AE60001FBAD0 /* MainListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8EAC219D29D1A0CE00659F63 /* pomory-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pomory-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EAC21A029D1A0CE00659F63 /* pomory_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pomory_iosApp.swift; sourceTree = "<group>"; };
-		8EAC21A229D1A0CE00659F63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8EAC21A429D1A0CF00659F63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8EAC21A729D1A0CF00659F63 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8EE9E3F829D1AE60001FBAD0 /* MainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +51,10 @@
 		8EAC219F29D1A0CE00659F63 /* pomory-ios */ = {
 			isa = PBXGroup;
 			children = (
+				8EE9E3FB29D1AE85001FBAD0 /* Memory */,
+				8EE9E3FA29D1AE7C001FBAD0 /* CoreData */,
 				8EAC21A029D1A0CE00659F63 /* pomory_iosApp.swift */,
-				8EAC21A229D1A0CE00659F63 /* ContentView.swift */,
+				8EE9E3F829D1AE60001FBAD0 /* MainListView.swift */,
 				8EAC21A429D1A0CF00659F63 /* Assets.xcassets */,
 				8EAC21A629D1A0CF00659F63 /* Preview Content */,
 			);
@@ -65,6 +67,20 @@
 				8EAC21A729D1A0CF00659F63 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8EE9E3FA29D1AE7C001FBAD0 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		8EE9E3FB29D1AE85001FBAD0 /* Memory */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Memory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +153,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EAC21A329D1A0CE00659F63 /* ContentView.swift in Sources */,
 				8EAC21A129D1A0CE00659F63 /* pomory_iosApp.swift in Sources */,
+				8EE9E3F929D1AE60001FBAD0 /* MainListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
