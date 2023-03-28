@@ -9,12 +9,10 @@ import SwiftUI
 
 @main
 struct pomory_iosApp: App {
-    @StateObject var store = MemoStore()
-    
     var body: some Scene {
         WindowGroup {
-            MainListView()
-                .environmentObject(store)
+            MainView()
+                
         }
     }
 }
