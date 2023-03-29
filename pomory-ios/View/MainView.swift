@@ -8,37 +8,51 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var selectedIndex = 1
+    let tabBarImages = ["tray", "calendar", "line.3.horizontal"]
+    
     var body: some View {
-        TabView {
-            RecordView()
-                .tabItem {
-                    Image(systemName: "tray")
+        VStack {
+            ZStack {
+                switch selectedIndex {
+                case 0:
+                    RecordView()
+                case 1:
+                    CalendarView()
+                case 2:
+                    SettingView()
+                default:
+                    CalendarView()
                 }
-            CalendarView()
-                .tabItem {
-                    Image(systemName: "calendar")
-                }
-            SettingView()
-                .tabItem {
-                    Image(systemName: "line.3.horizontal")
-                }
-        }
-        .accentColor(.black)
-        .onAppear {
-            if #available(iOS 15.0, *) {
-                let appearance = UITabBarAppearance()
-                UITabBar.appearance().scrollEdgeAppearance = appearance
-                UITabBar.appearance().isTranslucent = true
-                UITabBar.appearance().backgroundColor = UIColor.white
             }
+            Spacer()
+            Divider()
+            HStack{
+                ForEach(0..<tabBarImages.count, id: \.self) { index in
+                    if (index != 0) {
+                        Spacer()
+                    }
+                    VStack {
+                        Image(systemName: tabBarImages[index])
+                            .font(.system(size: 26))
+                            .foregroundColor(selectedIndex == index ? Color(.black) : Color(.tertiaryLabel))
+                    }
+                    .gesture(
+                        TapGesture()
+                            .onEnded { _ in
+                                selectedIndex = index
+                            }
+                    )
+                }
+            }
+            .padding([.leading, .trailing], 49)
+            .padding([.top, .bottom], 16)
         }
-
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
-            
     }
 }

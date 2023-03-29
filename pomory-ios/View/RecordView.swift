@@ -9,7 +9,15 @@ import SwiftUI
 
 struct RecordView: View {
     var body: some View {
-        Text("Record View")
+        
+        VStack {
+            Spacer()
+            Text("record view")
+            Spacer()
+        }
+        
+            
+        
     }
 }
 

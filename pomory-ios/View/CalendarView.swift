@@ -9,7 +9,18 @@ import SwiftUI
 
 struct CalendarView: View {
     var body: some View {
-        Text("Calendar View")
+        VStack {
+            HStack {
+                VStack {
+                    Text("2023")
+                    Text("January")
+                }
+                Spacer()
+            }
+            Text("calendar")
+            Text("calendar")
+            Text("calendar")
+        }
     }
 }
 
