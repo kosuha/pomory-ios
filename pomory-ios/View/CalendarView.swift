@@ -11,16 +11,18 @@ struct CalendarView: View {
     var body: some View {
         VStack {
             HStack {
-                VStack {
+                VStack (alignment: .leading, spacing: 0) {
                     Text("2023")
                     Text("January")
                 }
                 Spacer()
             }
+            .border(.green)
             Text("calendar")
-            Text("calendar")
-            Text("calendar")
+                .padding(EdgeInsets(top: 100, leading: 100, bottom: 100, trailing: 100))
+                .border(.green)
         }
+        .border(.red)
     }
 }
 
