@@ -10,11 +10,11 @@ import SwiftUI
 struct CalendarBodyWeekdaysView: View {
     var body: some View {        
         HStack {
-            ForEach(Constants.weekdayTextListUppercase, id: \.self) { weekday in
+            ForEach(Constants.weekdayTextUppercaseList, id: \.self) { weekday in
                 HStack {
                     Spacer(minLength: 1)
                     Text(weekday)
-                        .font(.system(size: 12))
+                        .font(.system(size: 12, weight: .medium))
                     Spacer(minLength: 1)
                 }
             }

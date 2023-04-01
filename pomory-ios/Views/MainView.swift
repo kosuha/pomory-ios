@@ -24,15 +24,16 @@ struct MainView: View {
                     CalendarView()
                 }
             }
+            .padding(EdgeInsets(top: 32, leading: 0, bottom: 0, trailing: 0))
             Spacer()
             Divider()
             HStack{
-                ForEach(0..<Constants.tabBarImages.count, id: \.self) { index in
+                ForEach(0..<Constants.tabBarImagesList.count, id: \.self) { index in
                     if (index != 0) {
                         Spacer()
                     }
                     VStack {
-                        Image(systemName: Constants.tabBarImages[index])
+                        Image(systemName: Constants.tabBarImagesList[index])
                             .font(.system(size: 26))
                             .foregroundColor(selectedIndex == index ? Color(.black) : Color(.tertiaryLabel))
                     }
@@ -44,8 +45,7 @@ struct MainView: View {
                     )
                 }
             }
-            .padding([.leading, .trailing], 49)
-            .padding([.top, .bottom], 16)
+            .padding(EdgeInsets(top: 16, leading: 49, bottom: 16, trailing: 49))
         }
     }
 }
