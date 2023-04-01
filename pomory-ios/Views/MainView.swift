@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selectedIndex = 1
-    let tabBarImages = ["tray", "calendar", "line.3.horizontal"]
     
     var body: some View {
         VStack {
@@ -28,12 +27,12 @@ struct MainView: View {
             Spacer()
             Divider()
             HStack{
-                ForEach(0..<tabBarImages.count, id: \.self) { index in
+                ForEach(0..<Constants.tabBarImages.count, id: \.self) { index in
                     if (index != 0) {
                         Spacer()
                     }
                     VStack {
-                        Image(systemName: tabBarImages[index])
+                        Image(systemName: Constants.tabBarImages[index])
                             .font(.system(size: 26))
                             .foregroundColor(selectedIndex == index ? Color(.black) : Color(.tertiaryLabel))
                     }
