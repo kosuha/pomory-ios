@@ -8,14 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var _showing = false
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
+        Button(action: {}, label: <#T##() -> View#>)
     }
 }
 
