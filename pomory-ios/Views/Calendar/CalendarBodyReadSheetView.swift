@@ -53,7 +53,7 @@ struct CalendarBodyReadSheetView: View {
                 
                 Text((dateItem.getRecord()?.title)!)
                     .font(.system(size: 18, weight: .bold))
-                    .foregroundColor(.gray)
+                    .foregroundColor(.black)
                     .padding(EdgeInsets(top: 7, leading: 7, bottom: 7, trailing: 7))
                     .background(Color(uiColor: .systemBackground))
 
