@@ -84,11 +84,8 @@ struct CalendarMonthChangeSheetView: View {
                         }
                     }
                 }
-//                .padding(EdgeInsets(top: 0, leading: 24, bottom: 43, trailing: 24))
             }
             .padding(EdgeInsets(top: 33, leading: 24, bottom: 43, trailing: 24))
-            
-            
             
             Button(action: {
                 calendarViewModel.setSelectedMonth(year: String(year), month: String(month))

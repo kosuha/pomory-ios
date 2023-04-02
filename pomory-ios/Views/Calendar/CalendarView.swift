@@ -8,7 +8,15 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @StateObject private var calendarViewModel = CalendarViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var calendarViewModel: CalendarViewModel
+    
+    init() {
+        let context = PersistenceController.shared.container.viewContext
+        _calendarViewModel = StateObject(wrappedValue: CalendarViewModel(viewContext: context))
+        _calendarViewModel
+    }
+
     
     var body: some View {
         VStack {

@@ -37,3 +37,22 @@ func getIndexOfFirstWeekday(date: Date) -> Int {
     }
     return 0
 }
+
+func isToday(date: Date) -> Bool {
+        let diffFromToday: Int = dateCompare(from: Date(), to: date)
+        return (diffFromToday == 0)
+    }
+
+func isPast(date: Date) -> Bool {
+    let diffFromToday: Int = dateCompare(from: Date(), to: date)
+    return (diffFromToday < 0)
+}
+
+func isFuture(date: Date) -> Bool {
+    let diffFromToday: Int = dateCompare(from: Date(), to: date)
+    return (diffFromToday > 0)
+}
+
+func isSelectedMonth(date: Date, selectedMonth: Date) -> Bool {
+        return (dateToString(date: date, format: "yyyyMM") == dateToString(date: selectedMonth, format: "yyyyMM"))
+    }

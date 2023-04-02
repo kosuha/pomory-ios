@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct pomory_iosApp: App {
+    let persistenceController = PersistenceController.shared
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
-                
+            ContentView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
