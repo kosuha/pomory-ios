@@ -20,14 +20,14 @@ struct CalendarBodyView: View {
                         ForEach(0..<7) { j in
                             HStack {
                                 Spacer(minLength: 1)
-                                CalendarBodyDayView(dateItem: calendarViewModel.getDateItemList()[(i * 7) + j])
-                                Spacer(minLength: 1)
+                                CalendarBodyDayView(calendarViewModel: calendarViewModel, dateItem: calendarViewModel.getDateItemList()[i * 7 + j])
                             }
+                            Spacer(minLength: 1)
                         }
                     }
                 }
             }
-            
         }
+        
     }
 }

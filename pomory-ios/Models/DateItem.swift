@@ -8,41 +8,25 @@
 import Foundation
 
 class DateItem {
+    private let index: Int
     private let date: Date
-    private let selectedMonth: Date
-    private let diffFromToday: Int
+    private let record: Record?
     
-    init(date: Date, selectedMonth: Date) {
+    init(index: Int, date: Date, record: Record? = nil) {
+        self.index = index
         self.date = date
-        self.selectedMonth = selectedMonth
-        self.diffFromToday = dateCompare(from: Date(), to: date)
+        self.record = record
+    }
+    
+    func getIndex() -> Int {
+        return self.index
     }
     
     func getDate() -> Date {
         return self.date
     }
-    
-    func getDay() -> String {
-        return dateToString(date: self.date, format: "d")
-    }
-    
-    func isToday() -> Bool {
-        return (self.diffFromToday == 0)
-    }
-    
-    func isPast() -> Bool {
-        return (self.diffFromToday > 0)
-    }
-    
-    func isFuture() -> Bool {
-        return (self.diffFromToday < 0)
-    }
-    
-    func getDiff() -> Int {
-        return self.diffFromToday
-    }
-    
-    func isSelectedMonth() -> Bool {
-        return (dateToString(date: date, format: "yyyyMM") == dateToString(date: selectedMonth, format: "yyyyMM"))
+
+    func getRecord() -> Record? {
+        return self.record
     }
 }

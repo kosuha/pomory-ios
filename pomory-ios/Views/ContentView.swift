@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct ContentView: View {
+    @Environment(\.managedObjectContext) var managedObjectContext
     @State private var selectedIndex = 1
     
     var body: some View {
@@ -50,8 +51,8 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
+struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        ContentView()
     }
 }
