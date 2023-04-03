@@ -14,7 +14,6 @@ struct CalendarView: View {
     init() {
         let context = PersistenceController.shared.container.viewContext
         _calendarViewModel = StateObject(wrappedValue: CalendarViewModel(viewContext: context))
-        _calendarViewModel
     }
 
     

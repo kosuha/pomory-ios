@@ -14,6 +14,9 @@
 		8E30A48129D322B700BF92FC /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30A48029D322B700BF92FC /* RecordView.swift */; };
 		8E30A48329D3231F00BF92FC /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30A48229D3231F00BF92FC /* CalendarView.swift */; };
 		8E30A48529D3238500BF92FC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E30A48429D3238500BF92FC /* SettingView.swift */; };
+		8E378C0529DADB4300F21C84 /* EmojiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378C0429DADB4300F21C84 /* EmojiTextField.swift */; };
+		8E378C0729DAFCEE00F21C84 /* KeyboardHeightPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378C0629DAFCEE00F21C84 /* KeyboardHeightPublisher.swift */; };
+		8E378C0929DB110900F21C84 /* HideKeyboardExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378C0829DB110900F21C84 /* HideKeyboardExtention.swift */; };
 		8E62708229D88617003CB744 /* CalendarMonthChangeSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E62708129D88617003CB744 /* CalendarMonthChangeSheetView.swift */; };
 		8E975DED29D80BD2009595E4 /* CalendarBodyDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E975DEC29D80BD2009595E4 /* CalendarBodyDayView.swift */; };
 		8E975DF029D81CAB009595E4 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E975DEF29D81CAB009595E4 /* util.swift */; };
@@ -39,6 +42,9 @@
 		8E30A48029D322B700BF92FC /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		8E30A48229D3231F00BF92FC /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		8E30A48429D3238500BF92FC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		8E378C0429DADB4300F21C84 /* EmojiTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiTextField.swift; sourceTree = "<group>"; };
+		8E378C0629DAFCEE00F21C84 /* KeyboardHeightPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightPublisher.swift; sourceTree = "<group>"; };
+		8E378C0829DB110900F21C84 /* HideKeyboardExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtention.swift; sourceTree = "<group>"; };
 		8E62708129D88617003CB744 /* CalendarMonthChangeSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthChangeSheetView.swift; sourceTree = "<group>"; };
 		8E975DEC29D80BD2009595E4 /* CalendarBodyDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBodyDayView.swift; sourceTree = "<group>"; };
 		8E975DEF29D81CAB009595E4 /* util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
@@ -109,6 +115,9 @@
 				8E975DFA29D85020009595E4 /* Constants.swift */,
 				8E975DF229D84262009595E4 /* ColorExtention.swift */,
 				8E975DFF29D8624A009595E4 /* StringExtention.swift */,
+				8E378C0429DADB4300F21C84 /* EmojiTextField.swift */,
+				8E378C0829DB110900F21C84 /* HideKeyboardExtention.swift */,
+				8E378C0629DAFCEE00F21C84 /* KeyboardHeightPublisher.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -240,13 +249,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E975DF529D84D15009595E4 /* CalendarTitleView.swift in Sources */,
+				8E378C0529DADB4300F21C84 /* EmojiTextField.swift in Sources */,
 				8E975DF029D81CAB009595E4 /* util.swift in Sources */,
 				8E975DF729D84DBE009595E4 /* CalendarBodyView.swift in Sources */,
 				8EAC21A129D1A0CE00659F63 /* pomory_iosApp.swift in Sources */,
 				8E975DED29D80BD2009595E4 /* CalendarBodyDayView.swift in Sources */,
 				8E30A48529D3238500BF92FC /* SettingView.swift in Sources */,
 				8E1C469F29D9A1050095AC13 /* CalendarBodyReadSheetView.swift in Sources */,
+				8E378C0729DAFCEE00F21C84 /* KeyboardHeightPublisher.swift in Sources */,
 				8E62708229D88617003CB744 /* CalendarMonthChangeSheetView.swift in Sources */,
+				8E378C0929DB110900F21C84 /* HideKeyboardExtention.swift in Sources */,
 				8E975DF329D84262009595E4 /* ColorExtention.swift in Sources */,
 				8E1C469929D92D650095AC13 /* Model.xcdatamodeld in Sources */,
 				8E30A48129D322B700BF92FC /* RecordView.swift in Sources */,
