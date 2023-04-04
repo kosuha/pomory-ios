@@ -73,60 +73,60 @@ struct CalendarBodyWriteSheetView: View {
                     // image area
                     
                     VStack {
-                        
-                        if let image = selectedImage {
-                            ZStack(alignment: .topTrailing) {
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 200, height: 268)
-                                    .clipped()
-                                    .cornerRadius(20)
-                                    .foregroundColor(.gray)
-                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 47, trailing: 0))
-                                Circle()
-                                    .fill(Color(hex: 0x191F28, alpha: 0.7))
-                                    .frame(width: 26, height: 26)
-                                    .overlay(
-                                        Image(systemName: "multiply")
-                                            .font(.system(size: 18, weight: .regular))
-                                            .foregroundColor(.white)
-                                    )
-                                    .padding(15)
-                                    .onTapGesture {
-                                        selectedImage = nil
-                                    }
-                            }
-                            .id(0)
-                            
-                        } else {
-                            PhotosPicker(selection: $selectedItem, matching: .images) {
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color(hex: 0xF2F2F2))
-                                    .frame(width: 200, height: 268)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 50)
-                                            .stroke(.black, lineWidth: 1)
-                                            .frame(width: 48, height: 74)
-                                    )
-                                    .overlay(
-                                        Image(systemName: "plus")
-                                            .foregroundColor(.black)
-                                            .font(.system(size: 24, weight: .regular))
-                                    )
-                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 47, trailing: 0))
-                            }
-                            .onChange(of: selectedItem) { newValue in
-                                Task {
-                                    if let imageData = try? await newValue?.loadTransferable(type: Data.self), let image = UIImage(data: imageData) {
-                                        selectedImage = Image(uiImage: image)
-                                        selectedUIImage = image
+                        VStack {
+                            if let image = selectedImage {
+                                ZStack(alignment: .topTrailing) {
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 200, height: 268)
+                                        .clipped()
+                                        .cornerRadius(20)
+                                        .foregroundColor(.gray)
+                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 47, trailing: 0))
+                                    Circle()
+                                        .fill(Color(hex: 0x191F28, alpha: 0.7))
+                                        .frame(width: 26, height: 26)
+                                        .overlay(
+                                            Image(systemName: "multiply")
+                                                .font(.system(size: 18, weight: .regular))
+                                                .foregroundColor(.white)
+                                        )
+                                        .padding(15)
+                                        .onTapGesture {
+                                            selectedImage = nil
+                                        }
+                                }
+                                
+                            } else {
+                                PhotosPicker(selection: $selectedItem, matching: .images) {
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .fill(Color(hex: 0xF2F2F2))
+                                        .frame(width: 200, height: 268)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 50)
+                                                .stroke(.black, lineWidth: 1)
+                                                .frame(width: 48, height: 74)
+                                        )
+                                        .overlay(
+                                            Image(systemName: "plus")
+                                                .foregroundColor(.black)
+                                                .font(.system(size: 24, weight: .regular))
+                                        )
+                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 47, trailing: 0))
+                                }
+                                .onChange(of: selectedItem) { newValue in
+                                    Task {
+                                        if let imageData = try? await newValue?.loadTransferable(type: Data.self), let image = UIImage(data: imageData) {
+                                            selectedImage = Image(uiImage: image)
+                                            selectedUIImage = image
+                                        }
                                     }
                                 }
+                                
                             }
-                            
                         }
-                        
+                        .id(0)
                         
                         // input area
                         VStack {
@@ -142,6 +142,8 @@ struct CalendarBodyWriteSheetView: View {
                                                 stampText = String(value.suffix(1))
                                             }
                                             stamp = stampText
+                                            hideKeyboard()
+                                            proxy.scrollTo(0, anchor: .top)
                                         }
                                     
                                     TextField("제목을 입력해주세요.", text: $title)
@@ -162,12 +164,11 @@ struct CalendarBodyWriteSheetView: View {
                                         }
                                         .onSubmit {
                                             withAnimation {
-                                                proxy.scrollTo(0, anchor: .top)
                                                 hideKeyboard()
+                                                proxy.scrollTo(0, anchor: .top)
                                             }
                                         }
                                 }
-                                .id(1)
                                 
                                 ZStack() {
                                     Text(stamp)
@@ -231,7 +232,6 @@ struct CalendarBodyWriteSheetView: View {
                                             }
                                         }
                                 }
-                                
                             }
                             
                             HStack {
@@ -243,11 +243,12 @@ struct CalendarBodyWriteSheetView: View {
                             
                             Divider()
                         }
+                        .id(1)
                         
                     }
                     .padding(EdgeInsets(top: 20, leading: 20, bottom: 20 + keyboardHeightPublisher.keyboardHeight, trailing: 20))
                     
-                }
+                }.scrollDismissesKeyboard(.immediately)
             }
             .onTapGesture {
                 withAnimation {
