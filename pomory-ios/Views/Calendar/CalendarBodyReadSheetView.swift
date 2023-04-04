@@ -30,7 +30,7 @@ struct CalendarBodyReadSheetView: View {
                 
                 Spacer()
                 
-                Image(systemName: "multiply")
+                Image(systemName: "ellipsis")
                     .font(.system(size: 18, weight: .semibold))
                     .frame(width: 64, height: 64)
                     .onTapGesture {
@@ -44,12 +44,15 @@ struct CalendarBodyReadSheetView: View {
                     Image(uiImage: uiImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 200, height: 268)
+                        .frame(width: 241.13, height: 322)
                         .clipped()
                         .cornerRadius(20)
                         .foregroundColor(.gray)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 47, trailing: 0))
                 }
+                
+                Text((dateItem.getRecord()?.stamp)!)
+                    .font(.system(size: 30))
                 
                 Text((dateItem.getRecord()?.title)!)
                     .font(.system(size: 18, weight: .bold))

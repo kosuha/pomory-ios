@@ -221,6 +221,7 @@ struct CalendarBodyWriteSheetView: View {
                                             hideKeyboard()
                                         }
                                     }
+                                    .scrollDismissesKeyboard(.never)
                                 if text.isEmpty {
                                     Text("남기고 싶은 메모리를 기록해보세요.")
                                         .foregroundColor(.gray)
@@ -244,11 +245,10 @@ struct CalendarBodyWriteSheetView: View {
                             Divider()
                         }
                         .id(1)
-                        
                     }
                     .padding(EdgeInsets(top: 20, leading: 20, bottom: 20 + keyboardHeightPublisher.keyboardHeight, trailing: 20))
-                    
-                }.scrollDismissesKeyboard(.immediately)
+                }
+                .scrollDismissesKeyboard(.immediately)
             }
             .onTapGesture {
                 withAnimation {
