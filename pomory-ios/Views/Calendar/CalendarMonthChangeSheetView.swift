@@ -30,6 +30,7 @@ struct CalendarMonthChangeSheetView: View {
                             .font(.system(size: 22, weight: .semibold))
                             .onTapGesture {
                                 year -= 1
+                                Vibration.selection.vibrate()
                             }
                     }
                     
@@ -47,6 +48,7 @@ struct CalendarMonthChangeSheetView: View {
                             .font(.system(size: 22, weight: .semibold))
                             .onTapGesture {
                                 year += 1
+                                Vibration.selection.vibrate()
                             }
                     }
                 }
@@ -79,6 +81,7 @@ struct CalendarMonthChangeSheetView: View {
                                 }
                                 .onTapGesture {
                                     month = i * 4 + j + 1
+                                    Vibration.selection.vibrate()
                                 }
                             }
                         }

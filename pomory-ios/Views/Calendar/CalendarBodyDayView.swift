@@ -73,7 +73,7 @@ struct CalendarBodyDayView: View {
         })
         
         .fullScreenCover(isPresented: $showingReadSheet, content: {
-            CalendarBodyReadSheetView(showingSheet: $showingReadSheet, dateItem: dateItem)
+            CalendarBodyReadSheetView(calendarViewModel: calendarViewModel, showingReadSheet: $showingReadSheet, dateItem: dateItem)
         })
     }
 }

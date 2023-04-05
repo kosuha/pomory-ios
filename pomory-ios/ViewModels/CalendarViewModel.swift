@@ -106,7 +106,7 @@ class CalendarViewModel: ObservableObject {
         return self.dateItemList
     }
     
-    func saveData(date: Date, title: String, stamp: String?, text: String, selectedUIImage: UIImage) {
+    func saveRecord(date: Date, title: String, stamp: String?, text: String, selectedUIImage: UIImage) {
         let context = PersistenceController.shared.container.viewContext
         let newRecord = Record(context: context)
 
@@ -121,5 +121,22 @@ class CalendarViewModel: ObservableObject {
         } catch {
             print("Error saving record: \(error)")
         }
+    }
+    
+    func deleteRecord(dateItem: DateItem) {
+        let context = PersistenceController.shared.container.viewContext
+        
+        context.delete(dateItem.getRecord()!)
+//        self.dateItemList.remove(at: dateItem.getIndex())
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error delete record: \(error)")
+        }
+    }
+    
+    func deleteRecordAtMemory(dateItem: DateItem) {
+        self.dateItemList.remove(at: dateItem.getIndex())
     }
 }
