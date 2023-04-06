@@ -1,5 +1,5 @@
 //
-//  CalendarBodyWriteSheetView.swift
+//  CalendarBodyEditSheetView.swift
 //  pomory-ios
 //
 //  Created by Seonho Kim on 2023/04/02.
@@ -9,21 +9,23 @@ import SwiftUI
 import PhotosUI
 import CoreData
 
-struct CalendarBodyWriteSheetView: View {
+struct CalendarBodyEditSheetView: View {
     @Binding var showingSheet: Bool
     @ObservedObject var calendarViewModel: CalendarViewModel
     let dateItem: DateItem
-    @State var selectedImage: Image?
-    @State var title: String
-    @State var text: String
-    @State var stampText: String
     
     @StateObject private var keyboardHeightPublisher = KeyboardHeightPublisher()
+    
     @State private var selectedItem: PhotosPickerItem? = nil
+    @State private var selectedImage: Image
     @State private var selectedUIImage: UIImage? = nil
     
+    @State private var title: String
+    @State private var text: String
     @State private var textPlaceholder = "남기고 싶은 기억을 기록해보세요."
+    @State private var stampText: String
     @State private var stamp: String = ""
+    
     @FocusState private var isFocusEmojiField: Bool
     @FocusState private var isFocusTextEditor: Bool
     @FocusState private var isFocusTextPlaceholder: Bool

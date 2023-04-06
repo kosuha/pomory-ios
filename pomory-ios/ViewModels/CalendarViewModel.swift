@@ -12,8 +12,9 @@ import PhotosUI
 class CalendarViewModel: ObservableObject {
     @Published private var selectedMonth: Date = Date()
     @Published private var dateItemList: Array<DateItem>
-    
     private var viewContext: NSManagedObjectContext
+    
+    @Published var deleteEvent: Bool = false
     
     
     
@@ -102,6 +103,12 @@ class CalendarViewModel: ObservableObject {
         }
     }
     
+    func setDateItemNoRecord(dateItem: DateItem) {
+        let newDateItem = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: nil)
+        self.dateItemList.remove(at: newDateItem.getIndex())
+        self.dateItemList.insert(newDateItem, at: newDateItem.getIndex())
+    }
+    
     func getDateItemList() -> Array<DateItem> {
         return self.dateItemList
     }
@@ -126,17 +133,19 @@ class CalendarViewModel: ObservableObject {
     func deleteRecord(dateItem: DateItem) {
         let context = PersistenceController.shared.container.viewContext
         
+        let newDateItem = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: nil)
+        
+        self.dateItemList.remove(at: newDateItem.getIndex())
+        self.dateItemList.insert(newDateItem, at: newDateItem.getIndex())
+        
         context.delete(dateItem.getRecord()!)
-//        self.dateItemList.remove(at: dateItem.getIndex())
         
         do {
             try context.save()
         } catch {
             print("Error delete record: \(error)")
         }
-    }
-    
-    func deleteRecordAtMemory(dateItem: DateItem) {
-        self.dateItemList.remove(at: dateItem.getIndex())
+        
+        self.deleteEvent.toggle()
     }
 }

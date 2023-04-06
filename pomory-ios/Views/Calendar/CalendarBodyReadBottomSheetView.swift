@@ -7,11 +7,14 @@
 
 import SwiftUI
 
-struct CalendarBodyReadEditSheetView: View {
+struct CalendarBodyReadBottomSheetView: View {
     @ObservedObject var calendarViewModel: CalendarViewModel
-    @Binding var showingEditSheet: Bool
+    @Binding var showingBottomSheet: Bool
     @Binding var showingReadSheet: Bool
+    
     let dateItem: DateItem
+    
+    @State var showingEditSheet: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -32,8 +35,20 @@ struct CalendarBodyReadEditSheetView: View {
                 )
                 .padding(.bottom, 12)
                 .onTapGesture {
-                    
+                    showingReadSheet.toggle()
+                    showingBottomSheet.toggle()
                 }
+                .fullScreenCover(isPresented: $showingEditSheet, content: {
+                    CalendarBodyWriteSheetView(
+                        calendarViewModel: calendarViewModel,
+                        showingReadSheet: $showingReadSheet,
+                        dateItem: dateItem,
+                        selectedImage: dateItem.getRecord()?.image,
+                        title: dateItem.getRecord().title,
+                        text: dateItem.getRecord()?.text,
+                        stamp: dateItem.getRecord()?.stamp
+                    )
+                })
                 
                 HStack(spacing: 0) {
                     Image(systemName: "trash.fill")
@@ -45,15 +60,13 @@ struct CalendarBodyReadEditSheetView: View {
                         .stroke(.black, lineWidth: 1)
                 )
                 .onTapGesture {
-                    calendarViewModel.deleteRecord(dateItem: dateItem)
                     showingReadSheet.toggle()
-                    showingEditSheet.toggle()
-                    
-//                    calendarViewModel.deleteRecordAtMemory(dateItem: dateItem)
-                    
+                    showingBottomSheet.toggle()
+                    calendarViewModel.deleteRecord(dateItem: dateItem)
                 }
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+
             
             Spacer()
         }

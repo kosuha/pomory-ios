@@ -12,6 +12,8 @@ struct CalendarBodyDayView: View {
     @State private var showingWriteSheet: Bool = false
     @State private var showingReadSheet: Bool = false
     
+    @State private var forceRefresh: Bool = false
+    
     let dateItem: DateItem
     
     var body: some View {
@@ -68,12 +70,21 @@ struct CalendarBodyDayView: View {
             CalendarBodyWriteSheetView(
                 showingSheet: $showingWriteSheet,
                 calendarViewModel: calendarViewModel,
-                dateItem: dateItem
+                dateItem: dateItem,
+                selectedImage: dateItem.getRecord()?.image,
+                title: dateItem.getRecord()?.title,
+                text: dateItem.getRecord()?.text,
+                stampText: dateItem.getRecord()?.stamp
             )
         })
         
         .fullScreenCover(isPresented: $showingReadSheet, content: {
             CalendarBodyReadSheetView(calendarViewModel: calendarViewModel, showingReadSheet: $showingReadSheet, dateItem: dateItem)
         })
+        
+        .onReceive(calendarViewModel.$deleteEvent) { _ in
+            forceRefresh.toggle()
+        }
+        
     }
 }

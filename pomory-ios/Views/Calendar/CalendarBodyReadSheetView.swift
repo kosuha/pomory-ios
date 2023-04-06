@@ -15,43 +15,47 @@ struct CalendarBodyReadSheetView: View {
     
     let dateItem: DateItem
     
-    @State private var showingEditSheet: Bool = false
+    @State private var showingBottomSheet: Bool = false
     
     var body: some View {
-        
-        HStack(alignment: .top) {
-            VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    Image(systemName: "multiply")
-                        .font(.system(size: 18, weight: .semibold))
-                        .frame(width: 64, height: 64)
-                        .onTapGesture {
-                            showingReadSheet.toggle()
-                        }
-                    
-                    Spacer()
-                    
-                    Text("\(dateToString(date: dateItem.getDate(), format: "MMMM d, EEE"))")
-                        .font(.system(size: 18, weight: .bold))
-                    
-                    Spacer()
-                    
-                    Image(systemName: "ellipsis")
-                        .font(.system(size: 18, weight: .semibold))
-                        .frame(width: 64, height: 64)
-                        .onTapGesture {
-                            showingEditSheet.toggle()
-                        }
-                        .sheet(isPresented: $showingEditSheet) {
-                            CalendarBodyReadEditSheetView(calendarViewModel: calendarViewModel, showingEditSheet: $showingEditSheet, showingReadSheet: $showingReadSheet, dateItem: dateItem)
-                                .presentationDetents([.height(200)])
-                                
-                        }
-                }
-                
+        if let title = dateItem.getRecord()?.title,
+           let text = dateItem.getRecord()?.text,
+           let stamp = dateItem.getRecord()?.stamp,
+           let imageData = dateItem.getRecord()?.image,
+           let uiImage = UIImage(data: imageData)
+        {
+            HStack(alignment: .top) {
                 VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        Image(systemName: "multiply")
+                            .font(.system(size: 18, weight: .semibold))
+                            .frame(width: 64, height: 64)
+                            .onTapGesture {
+                                showingReadSheet.toggle()
+                            }
+                        
+                        Spacer()
+                        
+                        Text("\(dateToString(date: dateItem.getDate(), format: "MMMM d, EEE"))")
+                            .font(.system(size: 18, weight: .bold))
+                        
+                        Spacer()
+                        
+                        Image(systemName: "ellipsis")
+                            .font(.system(size: 18, weight: .semibold))
+                            .frame(width: 64, height: 64)
+                            .onTapGesture {
+                                showingBottomSheet.toggle()
+                            }
+                            .sheet(isPresented: $showingBottomSheet) {
+                                CalendarBodyReadBottomSheetView(calendarViewModel: calendarViewModel, showingBottomSheet: $showingBottomSheet, showingReadSheet: $showingReadSheet, dateItem: dateItem)
+                                    .presentationDetents([.height(200)])
+                            }
+                    }
                     
-                    if let imageData = dateItem.getRecord()?.image, let uiImage = UIImage(data: imageData) {
+                    VStack(spacing: 0) {
+                        
+                        
                         Image(uiImage: uiImage)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -60,41 +64,45 @@ struct CalendarBodyReadSheetView: View {
                             .cornerRadius(20)
                             .foregroundColor(.gray)
                             .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
-                    }
-                    
-                    Text((dateItem.getRecord()?.stamp)!)
-                        .font(.system(size: 30))
-                        .padding(EdgeInsets(top: 14, leading: 0, bottom: 14, trailing: 0))
-                    
-                    VStack(alignment: .center, spacing: 0) {
-                        HStack(spacing: 0) {
-                            Text((dateItem.getRecord()?.title)!)
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(.black)
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                                .background(Color(uiColor: .systemBackground))
-                            
-                            Spacer()
-                        }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 22, trailing: 0))
+                        
+                        Text(stamp)
+                            .font(.system(size: 30))
+                            .padding(EdgeInsets(top: 14, leading: 0, bottom: 14, trailing: 0))
+                            .frame(width: 30, height: 30)
 
-                        HStack(spacing: 0) {
-                            Text((dateItem.getRecord()?.text)!)
-                                .multilineTextAlignment(.leading)
-                                .font(.system(size: 16, weight: .regular))
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                                .background(Color(uiColor: .systemBackground))
-                                .frame(height: 226, alignment: .topLeading)
-                            
-                            Spacer()
+                        VStack(alignment: .center, spacing: 0) {
+                            HStack(spacing: 0) {
+                                
+                                Text(title)
+                                    .font(.system(size: 18, weight: .bold))
+                                    .foregroundColor(.black)
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                    .background(Color(uiColor: .systemBackground))
+                                
+                                Spacer()
+                            }
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 22, trailing: 0))
+
+                            HStack(spacing: 0) {
+                                
+                                Text(text)
+                                    .multilineTextAlignment(.leading)
+                                    .font(.system(size: 16, weight: .regular))
+                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                    .background(Color(uiColor: .systemBackground))
+                                    .frame(height: 226, alignment: .topLeading)
+                                
+                                Spacer()
+                            }
                         }
                     }
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                 }
-                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                
-                
             }
+        } else {
+            Text("삭제 하고 있어요...")
+                .font(.system(size: 18, weight: .regular))
+                .foregroundColor(.gray)
         }
-        
     }
 }
