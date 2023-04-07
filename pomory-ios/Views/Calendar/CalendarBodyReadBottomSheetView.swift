@@ -14,7 +14,7 @@ struct CalendarBodyReadBottomSheetView: View {
     
     let dateItem: DateItem
     
-    @State var showingEditSheet: Bool = false
+    @State var showingWriteSheet: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -35,18 +35,14 @@ struct CalendarBodyReadBottomSheetView: View {
                 )
                 .padding(.bottom, 12)
                 .onTapGesture {
-                    showingReadSheet.toggle()
-                    showingBottomSheet.toggle()
+//                    showingBottomSheet = false
+                    showingWriteSheet = true
                 }
-                .fullScreenCover(isPresented: $showingEditSheet, content: {
+                .fullScreenCover(isPresented: $showingWriteSheet, content: {
                     CalendarBodyWriteSheetView(
+                        showingWriteSheet: $showingWriteSheet,
                         calendarViewModel: calendarViewModel,
-                        showingReadSheet: $showingReadSheet,
-                        dateItem: dateItem,
-                        selectedImage: dateItem.getRecord()?.image,
-                        title: dateItem.getRecord().title,
-                        text: dateItem.getRecord()?.text,
-                        stamp: dateItem.getRecord()?.stamp
+                        dateItem: dateItem
                     )
                 })
                 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0EF43A29E063AA00303A41 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 8E0EF43929E063AA00303A41 /* Introspect */; };
 		8E1C469929D92D650095AC13 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E1C469729D92D650095AC13 /* Model.xcdatamodeld */; };
 		8E1C469B29D932670095AC13 /* CalendarBodyWriteSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1C469A29D932670095AC13 /* CalendarBodyWriteSheetView.swift */; };
 		8E1C469D29D97C220095AC13 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1C469C29D97C220095AC13 /* PersistenceController.swift */; };
@@ -19,7 +20,6 @@
 		8E378C0929DB110900F21C84 /* HideKeyboardExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E378C0829DB110900F21C84 /* HideKeyboardExtention.swift */; };
 		8E37E20A29DD948900C1D634 /* Vibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E37E20929DD948900C1D634 /* Vibration.swift */; };
 		8E37E20C29DDB8FD00C1D634 /* CalendarBodyReadBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E37E20B29DDB8FD00C1D634 /* CalendarBodyReadBottomSheetView.swift */; };
-		8E5BB28229DF005E003821E0 /* CalendarBodyEditSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5BB28129DF005E003821E0 /* CalendarBodyEditSheetView.swift */; };
 		8E62708229D88617003CB744 /* CalendarMonthChangeSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E62708129D88617003CB744 /* CalendarMonthChangeSheetView.swift */; };
 		8E975DED29D80BD2009595E4 /* CalendarBodyDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E975DEC29D80BD2009595E4 /* CalendarBodyDayView.swift */; };
 		8E975DF029D81CAB009595E4 /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E975DEF29D81CAB009595E4 /* util.swift */; };
@@ -50,7 +50,6 @@
 		8E378C0829DB110900F21C84 /* HideKeyboardExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtention.swift; sourceTree = "<group>"; };
 		8E37E20929DD948900C1D634 /* Vibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vibration.swift; sourceTree = "<group>"; };
 		8E37E20B29DDB8FD00C1D634 /* CalendarBodyReadBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBodyReadBottomSheetView.swift; sourceTree = "<group>"; };
-		8E5BB28129DF005E003821E0 /* CalendarBodyEditSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBodyEditSheetView.swift; sourceTree = "<group>"; };
 		8E62708129D88617003CB744 /* CalendarMonthChangeSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthChangeSheetView.swift; sourceTree = "<group>"; };
 		8E975DEC29D80BD2009595E4 /* CalendarBodyDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBodyDayView.swift; sourceTree = "<group>"; };
 		8E975DEF29D81CAB009595E4 /* util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E0EF43A29E063AA00303A41 /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,7 +89,6 @@
 				8E975DF829D84F3F009595E4 /* CalendarBodyWeekdaysView.swift */,
 				8E975DEC29D80BD2009595E4 /* CalendarBodyDayView.swift */,
 				8E1C469A29D932670095AC13 /* CalendarBodyWriteSheetView.swift */,
-				8E5BB28129DF005E003821E0 /* CalendarBodyEditSheetView.swift */,
 				8E1C469E29D9A1050095AC13 /* CalendarBodyReadSheetView.swift */,
 				8E37E20B29DDB8FD00C1D634 /* CalendarBodyReadBottomSheetView.swift */,
 				8E62708129D88617003CB744 /* CalendarMonthChangeSheetView.swift */,
@@ -203,6 +202,9 @@
 			dependencies = (
 			);
 			name = "pomory-ios";
+			packageProductDependencies = (
+				8E0EF43929E063AA00303A41 /* Introspect */,
+			);
 			productName = "pomory-ios";
 			productReference = 8EAC219D29D1A0CE00659F63 /* pomory-ios.app */;
 			productType = "com.apple.product-type.application";
@@ -231,6 +233,9 @@
 				Base,
 			);
 			mainGroup = 8EAC219429D1A0CE00659F63;
+			packageReferences = (
+				8E0EF43829E063AA00303A41 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+			);
 			productRefGroup = 8EAC219E29D1A0CE00659F63 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -259,7 +264,6 @@
 			files = (
 				8E37E20A29DD948900C1D634 /* Vibration.swift in Sources */,
 				8E975DF529D84D15009595E4 /* CalendarTitleView.swift in Sources */,
-				8E5BB28229DF005E003821E0 /* CalendarBodyEditSheetView.swift in Sources */,
 				8E378C0529DADB4300F21C84 /* EmojiTextField.swift in Sources */,
 				8E975DF029D81CAB009595E4 /* util.swift in Sources */,
 				8E975DF729D84DBE009595E4 /* CalendarBodyView.swift in Sources */,
@@ -483,6 +487,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8E0EF43829E063AA00303A41 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8E0EF43929E063AA00303A41 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E0EF43829E063AA00303A41 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8E1C469729D92D650095AC13 /* Model.xcdatamodeld */ = {

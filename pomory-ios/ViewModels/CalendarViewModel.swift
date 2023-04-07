@@ -103,11 +103,11 @@ class CalendarViewModel: ObservableObject {
         }
     }
     
-    func setDateItemNoRecord(dateItem: DateItem) {
-        let newDateItem = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: nil)
-        self.dateItemList.remove(at: newDateItem.getIndex())
-        self.dateItemList.insert(newDateItem, at: newDateItem.getIndex())
-    }
+//    func setDateItemNoRecord(dateItem: DateItem) {
+//        let newDateItem = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: nil)
+//        self.dateItemList.remove(at: newDateItem.getIndex())
+//        self.dateItemList.insert(newDateItem, at: newDateItem.getIndex())
+//    }
     
     func getDateItemList() -> Array<DateItem> {
         return self.dateItemList
@@ -145,7 +145,5 @@ class CalendarViewModel: ObservableObject {
         } catch {
             print("Error delete record: \(error)")
         }
-        
-        self.deleteEvent.toggle()
     }
 }

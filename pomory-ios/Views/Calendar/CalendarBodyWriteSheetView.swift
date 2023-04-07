@@ -8,22 +8,26 @@
 import SwiftUI
 import PhotosUI
 import CoreData
+import Introspect
 
 struct CalendarBodyWriteSheetView: View {
-    @Binding var showingSheet: Bool
+    @Binding var showingWriteSheet: Bool
     @ObservedObject var calendarViewModel: CalendarViewModel
     let dateItem: DateItem
-    @State var selectedImage: Image?
-    @State var title: String
-    @State var text: String
-    @State var stampText: String
+    
     
     @StateObject private var keyboardHeightPublisher = KeyboardHeightPublisher()
     @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedUIImage: UIImage? = nil
+    @State private var selectedUIImage: UIImage?
+    @State private var selectedImage: Image?
+    @State private var title: String
+    @State private var text: String
+    @State private var stampText: String
     
+    @State private var stamp: String
+    private let isEdit: Bool
     @State private var textPlaceholder = "남기고 싶은 기억을 기록해보세요."
-    @State private var stamp: String = ""
+    
     @FocusState private var isFocusEmojiField: Bool
     @FocusState private var isFocusTextEditor: Bool
     @FocusState private var isFocusTextPlaceholder: Bool
@@ -31,6 +35,26 @@ struct CalendarBodyWriteSheetView: View {
     
     let titleMaxLength = 20
     let textMaxLength = 200
+    
+    init(showingWriteSheet: Binding<Bool>, calendarViewModel: CalendarViewModel, dateItem: DateItem) {
+        self._showingWriteSheet = showingWriteSheet
+        self.calendarViewModel = calendarViewModel
+        self.dateItem = dateItem
+        self._title = State(initialValue: dateItem.getRecord()?.title ?? "")
+        self._text = State(initialValue: dateItem.getRecord()?.text ?? "")
+        self._stampText = State(initialValue: dateItem.getRecord()?.stamp ?? "")
+        self._stamp = State(initialValue: dateItem.getRecord()?.stamp ?? "")
+        
+        if let imageData = dateItem.getRecord()?.image, let uiImage = UIImage(data: imageData) {
+            self._selectedImage = State(initialValue: Image(uiImage: uiImage))
+            self._selectedUIImage = State(initialValue: uiImage)
+            self.isEdit = true
+        } else {
+            self._selectedImage = State(initialValue: nil)
+            self._selectedUIImage = State(initialValue: nil)
+            self.isEdit = false
+        }
+    }
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -42,7 +66,7 @@ struct CalendarBodyWriteSheetView: View {
                             .font(.system(size: 18, weight: .semibold))
                             .frame(width: 64, height: 64)
                             .onTapGesture {
-                                showingSheet = false
+                                showingWriteSheet = false
                             }
                         
                         Spacer()
@@ -63,10 +87,17 @@ struct CalendarBodyWriteSheetView: View {
                                 .foregroundColor(.black)
                                 .frame(width: 64, height: 64)
                                 .onTapGesture {
-                                    showingSheet = false
+                                    showingWriteSheet = false
                                     // upload action
-                                    calendarViewModel.saveRecord(date: dateItem.getDate(), title: title, stamp: stamp, text: text, selectedUIImage: selectedUIImage!)
-                                    calendarViewModel.setDateItem(dateItem: dateItem)
+                                    if (!isEdit) {
+                                        calendarViewModel.saveRecord(date: dateItem.getDate(), title: title, stamp: stamp, text: text, selectedUIImage: selectedUIImage!)
+                                        calendarViewModel.setDateItem(dateItem: dateItem)
+                                    } else {
+                                        calendarViewModel.deleteRecord(dateItem: dateItem)
+                                        calendarViewModel.saveRecord(date: dateItem.getDate(), title: title, stamp: stamp, text: text, selectedUIImage: selectedUIImage!)
+                                        calendarViewModel.setDateItem(dateItem: dateItem)
+                                    }
+                                    
                                 }
                         }
                     }
@@ -97,6 +128,8 @@ struct CalendarBodyWriteSheetView: View {
                                             .padding(15)
                                             .onTapGesture {
                                                 selectedImage = nil
+                                                selectedUIImage = nil
+                                                selectedItem = nil
                                             }
                                     }
                                     
@@ -119,9 +152,9 @@ struct CalendarBodyWriteSheetView: View {
                                     }
                                     .onChange(of: selectedItem) { newValue in
                                         Task {
-                                            if let imageData = try? await newValue?.loadTransferable(type: Data.self), let image = UIImage(data: imageData) {
-                                                selectedImage = Image(uiImage: image)
-                                                selectedUIImage = image
+                                            if let imageData = try? await newValue?.loadTransferable(type: Data.self), let uiImage = UIImage(data: imageData) {
+                                                selectedImage = Image(uiImage: uiImage)
+                                                selectedUIImage = uiImage
                                             }
                                         }
                                     }
@@ -137,9 +170,9 @@ struct CalendarBodyWriteSheetView: View {
                                 // stamp display
                                 ZStack {
                                     Text(stamp)
-                                        .font(.system(size: 35, weight: .bold))
+                                        .font(.system(size: 35))
                                         .background(Color(uiColor: .systemBackground))
-                                        .frame(width: 35, height: 35)
+                                        .frame(width: 54, height: 54)
                                         .onTapGesture {
                                             isFocusEmojiField.toggle()
                                             withAnimation {
@@ -151,6 +184,7 @@ struct CalendarBodyWriteSheetView: View {
                                         Image(systemName: "plus.circle")
                                             .foregroundColor(.gray)
                                             .font(.system(size: 35, weight: .light))
+                                            .frame(width: 54, height: 54)
                                             .onTapGesture {
                                                 isFocusEmojiField.toggle()
                                                 withAnimation {
@@ -159,7 +193,7 @@ struct CalendarBodyWriteSheetView: View {
                                             }
                                     }
                                 }
-                                .padding(22)
+                                .padding(10)
                                 
                                 // title input
                                 ZStack {
@@ -206,21 +240,34 @@ struct CalendarBodyWriteSheetView: View {
                                 ZStack(alignment: .topLeading) {
                                     if (text.isEmpty) {
                                         TextEditor(text: $textPlaceholder)
-                                            .focused($isFocusTextPlaceholder)
+                                            .padding(0)
+                                            .introspectTextView { textView in
+                                                textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                                                textView.textContainer.lineFragmentPadding = 0
+                                            }
+                                            .padding(0)
+                                            .focused($isFocusTextEditor)
                                             .font(.system(size: 16, weight: .regular))
                                             .background(Color(uiColor: .systemBackground))
-                                            .frame(width: .infinity, height: 226)
+                                            .frame(height: 226)
                                             .onTapGesture {
-                                                isFocusTextPlaceholder.toggle()
-                                                isFocusTextEditor.toggle()
+                                                withAnimation {
+                                                    proxy.scrollTo(1, anchor: .top)
+                                                }
                                             }
+                                            .padding(0)
+                                        
                                     }
                                         
                                     TextEditor(text: $text)
+                                        .introspectTextView { textView in
+                                            textView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                                            textView.textContainer.lineFragmentPadding = 0
+                                        }
                                         .focused($isFocusTextEditor)
                                         .font(.system(size: 16, weight: .regular))
                                         .background(Color(uiColor: .systemBackground))
-                                        .frame(width: .infinity, height: 226)
+                                        .frame(height: 226)
                                         .onChange(of: text) { value in
                                             if value.count > textMaxLength {
                                                 text = String(value.prefix(textMaxLength))
@@ -239,6 +286,7 @@ struct CalendarBodyWriteSheetView: View {
                                         }
                                         .scrollDismissesKeyboard(.never)
                                         .padding(0)
+                                        .border(.red)
                                     
                                     if text.isEmpty {
                                         Text("남기고 싶은 메모리를 기록해보세요.")

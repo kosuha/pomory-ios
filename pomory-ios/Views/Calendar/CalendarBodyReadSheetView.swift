@@ -24,7 +24,7 @@ struct CalendarBodyReadSheetView: View {
            let imageData = dateItem.getRecord()?.image,
            let uiImage = UIImage(data: imageData)
         {
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         Image(systemName: "multiply")
@@ -54,8 +54,6 @@ struct CalendarBodyReadSheetView: View {
                     }
                     
                     VStack(spacing: 0) {
-                        
-                        
                         Image(uiImage: uiImage)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -66,9 +64,9 @@ struct CalendarBodyReadSheetView: View {
                             .padding(EdgeInsets(top: 12, leading: 0, bottom: 0, trailing: 0))
                         
                         Text(stamp)
-                            .font(.system(size: 30))
-                            .padding(EdgeInsets(top: 14, leading: 0, bottom: 14, trailing: 0))
-                            .frame(width: 30, height: 30)
+                            .font(.system(size: 35))
+                            .frame(width: 54, height: 54)
+                            .padding(10)
 
                         VStack(alignment: .center, spacing: 0) {
                             HStack(spacing: 0) {
@@ -84,16 +82,18 @@ struct CalendarBodyReadSheetView: View {
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 22, trailing: 0))
 
                             HStack(spacing: 0) {
+                                ScrollView {
+                                    Text(text)
+                                        .multilineTextAlignment(.leading)
+                                        .font(.system(size: 16, weight: .regular))
+                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                        .background(Color(uiColor: .systemBackground))
+                                        .frame(minWidth: UIScreen.main.bounds.width - 40, alignment: .topLeading)
+//                                        .border(Color.red)
+                                }
                                 
-                                Text(text)
-                                    .multilineTextAlignment(.leading)
-                                    .font(.system(size: 16, weight: .regular))
-                                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                                    .background(Color(uiColor: .systemBackground))
-                                    .frame(height: 226, alignment: .topLeading)
-                                
-                                Spacer()
                             }
+                            .border(.red)
                         }
                     }
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
