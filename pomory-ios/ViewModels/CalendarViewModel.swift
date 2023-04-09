@@ -12,11 +12,11 @@ import PhotosUI
 class CalendarViewModel: ObservableObject {
     @Published private var selectedMonth: Date = Date()
     @Published private var dateItemList: Array<DateItem>
+    private var dateItemToRead: DateItem
+    @Published private var recordCopy: RecordCopy?
     private var viewContext: NSManagedObjectContext
     
     @Published var deleteEvent: Bool = false
-    
-    
     
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
@@ -25,6 +25,8 @@ class CalendarViewModel: ObservableObject {
         let _selectedMonth: Date = stringToDate(year: yearString, month: monthString, day: "01")
         self.selectedMonth = _selectedMonth
         self.dateItemList = []
+        self.recordCopy = nil
+        self.dateItemToRead = DateItem(index: 0, date: Date())
         setSelectedMonth(year: yearString, month: monthString)
         
     }
@@ -116,12 +118,21 @@ class CalendarViewModel: ObservableObject {
     func saveRecord(date: Date, title: String, stamp: String?, text: String, selectedUIImage: UIImage) {
         let context = PersistenceController.shared.container.viewContext
         let newRecord = Record(context: context)
+        let imageData = selectedUIImage.jpegData(compressionQuality: 0.8)
 
         newRecord.title = title
         newRecord.stamp = stamp
         newRecord.text = text
         newRecord.date = date
-        newRecord.image = selectedUIImage.jpegData(compressionQuality: 0.8)
+        newRecord.image = imageData
+        
+        self.recordCopy = RecordCopy(
+            title: title,
+            stamp: stamp,
+            text: text,
+            date: date,
+            image: imageData!
+        )
         
         do {
             try context.save()
@@ -130,20 +141,61 @@ class CalendarViewModel: ObservableObject {
         }
     }
     
+//    func deleteRecord(dateItem: DateItem) {
+//        let context = PersistenceController.shared.container.viewContext
+//
+//        let newDateItem = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: nil)
+//
+//        context.delete(self.dateItemList[dateItem.getIndex()].getRecord()!)
+//
+//        self.dateItemList.remove(at: newDateItem.getIndex())
+//        self.dateItemList.insert(newDateItem, at: newDateItem.getIndex())
+//
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Error delete record: \(error)")
+//        }
+//    }
+    
     func deleteRecord(dateItem: DateItem) {
         let context = PersistenceController.shared.container.viewContext
-        
-        let newDateItem = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: nil)
-        
-        self.dateItemList.remove(at: newDateItem.getIndex())
-        self.dateItemList.insert(newDateItem, at: newDateItem.getIndex())
-        
-        context.delete(dateItem.getRecord()!)
-        
-        do {
-            try context.save()
-        } catch {
-            print("Error delete record: \(error)")
+
+        if let recordToDelete = dateItem.getRecord() {
+            context.delete(recordToDelete)
+
+            do {
+                try context.save()
+                let newDateItem = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: nil)
+                self.dateItemList.remove(at: newDateItem.getIndex())
+                self.dateItemList.insert(newDateItem, at: newDateItem.getIndex())
+            } catch {
+                print("Error deleting record: \(error)")
+            }
         }
+    }
+
+    
+//    func setDateItemToRead(dateItem: DateItem) {
+//        self.dateItemToRead = DateItem(index: dateItem.getIndex(), date: dateItem.getDate(), record: dateItem.getRecord())
+//    }
+    
+    func setRecordCopy(dateItem: DateItem) {
+        if let title = dateItem.getRecord()?.title,
+           let text = dateItem.getRecord()?.text,
+           let stamp = dateItem.getRecord()?.stamp,
+           let image = dateItem.getRecord()?.image {
+            self.recordCopy = RecordCopy(
+                title: title,
+                stamp: stamp,
+                text: text,
+                date: dateItem.getDate(),
+                image: image
+            )
+        }
+    }
+
+    func getRecordCopy() -> RecordCopy? {
+        return self.recordCopy
     }
 }

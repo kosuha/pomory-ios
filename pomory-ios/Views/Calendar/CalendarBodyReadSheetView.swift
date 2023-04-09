@@ -12,16 +12,18 @@ import CoreData
 struct CalendarBodyReadSheetView: View {
     @ObservedObject var calendarViewModel: CalendarViewModel
     @Binding var showingReadSheet: Bool
-    
+    @Binding var showingWriteSheet: Bool
+    @State private var showingBottomSheet: Bool = false
+//    @State private var showingBottomSheet: Bool = false
     let dateItem: DateItem
     
-    @State private var showingBottomSheet: Bool = false
-    
     var body: some View {
-        if let title = dateItem.getRecord()?.title,
-           let text = dateItem.getRecord()?.text,
-           let stamp = dateItem.getRecord()?.stamp,
-           let imageData = dateItem.getRecord()?.image,
+        
+        if let title = calendarViewModel.getRecordCopy()?.title,
+           let date = calendarViewModel.getRecordCopy()?.date,
+           let text = calendarViewModel.getRecordCopy()?.text,
+           let stamp = calendarViewModel.getRecordCopy()?.stamp,
+           let imageData = calendarViewModel.getRecordCopy()?.image,
            let uiImage = UIImage(data: imageData)
         {
             HStack(alignment: .top, spacing: 0) {
@@ -36,7 +38,7 @@ struct CalendarBodyReadSheetView: View {
                         
                         Spacer()
                         
-                        Text("\(dateToString(date: dateItem.getDate(), format: "MMMM d, EEE"))")
+                        Text("\(dateToString(date: date, format: "MMMM d, EEE"))")
                             .font(.system(size: 18, weight: .bold))
                         
                         Spacer()
@@ -48,7 +50,12 @@ struct CalendarBodyReadSheetView: View {
                                 showingBottomSheet.toggle()
                             }
                             .sheet(isPresented: $showingBottomSheet) {
-                                CalendarBodyReadBottomSheetView(calendarViewModel: calendarViewModel, showingBottomSheet: $showingBottomSheet, showingReadSheet: $showingReadSheet, dateItem: dateItem)
+                                CalendarBodyReadBottomSheetView(
+                                    calendarViewModel: calendarViewModel,
+                                    showingBottomSheet: $showingBottomSheet,
+                                    showingReadSheet: $showingReadSheet,
+//                                    showingWriteSheet: $showingWriteSheet,
+                                    dateItem: dateItem)
                                     .presentationDetents([.height(200)])
                             }
                     }
@@ -81,7 +88,7 @@ struct CalendarBodyReadSheetView: View {
                             }
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 22, trailing: 0))
 
-                            HStack(spacing: 0) {
+                            VStack {
                                 ScrollView {
                                     Text(text)
                                         .multilineTextAlignment(.leading)
@@ -89,20 +96,17 @@ struct CalendarBodyReadSheetView: View {
                                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                                         .background(Color(uiColor: .systemBackground))
                                         .frame(minWidth: UIScreen.main.bounds.width - 40, alignment: .topLeading)
-//                                        .border(Color.red)
                                 }
-                                
+                                .frame(maxHeight: 226)
                             }
-                            .border(.red)
                         }
                     }
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                 }
             }
         } else {
-            Text("삭제 하고 있어요...")
-                .font(.system(size: 18, weight: .regular))
-                .foregroundColor(.gray)
+            EmptyView()
+            
         }
     }
 }

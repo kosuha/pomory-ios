@@ -11,6 +11,7 @@ struct CalendarBodyDayView: View {
     @ObservedObject var calendarViewModel: CalendarViewModel
     @State private var showingWriteSheet: Bool = false
     @State private var showingReadSheet: Bool = false
+    @State private var showingBottomSheet: Bool = false
     
 //    @State private var forceRefresh: Bool = false
     
@@ -59,6 +60,7 @@ struct CalendarBodyDayView: View {
             if (isToday(date: dateItem.getDate()) || isPast(date: dateItem.getDate())) {
                 if (dateItem.getRecord() != nil)
                 {
+                    calendarViewModel.setRecordCopy(dateItem: dateItem)
                     showingReadSheet.toggle()
                 } else {
                     showingWriteSheet.toggle()
@@ -69,17 +71,25 @@ struct CalendarBodyDayView: View {
         .fullScreenCover(isPresented: $showingWriteSheet, content: {
             CalendarBodyWriteSheetView(
                 showingWriteSheet: $showingWriteSheet,
+                showingBottomSheet: $showingBottomSheet,
                 calendarViewModel: calendarViewModel,
                 dateItem: dateItem
             )
         })
         
         .fullScreenCover(isPresented: $showingReadSheet, content: {
-            CalendarBodyReadSheetView(calendarViewModel: calendarViewModel, showingReadSheet: $showingReadSheet, dateItem: dateItem)
+            CalendarBodyReadSheetView(
+                calendarViewModel: calendarViewModel,
+                showingReadSheet: $showingReadSheet,
+                showingWriteSheet: $showingWriteSheet,
+                dateItem: dateItem
+//                dateItem: calendarViewModel.getDateItemToRead()
+            )
         })
         
 //        .onReceive(calendarViewModel.$deleteEvent) { _ in
 //            forceRefresh.toggle()
+////            calendarViewModel.deleteEvent.toggle()
 //        }
         
     }

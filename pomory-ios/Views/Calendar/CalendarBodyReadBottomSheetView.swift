@@ -11,10 +11,10 @@ struct CalendarBodyReadBottomSheetView: View {
     @ObservedObject var calendarViewModel: CalendarViewModel
     @Binding var showingBottomSheet: Bool
     @Binding var showingReadSheet: Bool
-    
+    @State private var showingWriteSheet: Bool = false
     let dateItem: DateItem
     
-    @State var showingWriteSheet: Bool = false
+    
     
     var body: some View {
         VStack(spacing: 0) {
@@ -41,6 +41,7 @@ struct CalendarBodyReadBottomSheetView: View {
                 .fullScreenCover(isPresented: $showingWriteSheet, content: {
                     CalendarBodyWriteSheetView(
                         showingWriteSheet: $showingWriteSheet,
+                        showingBottomSheet: $showingBottomSheet,
                         calendarViewModel: calendarViewModel,
                         dateItem: dateItem
                     )

@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct RecordCopy {
+    var title: String
+    var stamp: String?
+    var text: String
+    var date: Date
+    var image: Data
+}
+
 class DateItem {
     private let index: Int
     private let date: Date

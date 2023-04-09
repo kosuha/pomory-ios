@@ -12,6 +12,7 @@ import Introspect
 
 struct CalendarBodyWriteSheetView: View {
     @Binding var showingWriteSheet: Bool
+    @Binding var showingBottomSheet: Bool
     @ObservedObject var calendarViewModel: CalendarViewModel
     let dateItem: DateItem
     
@@ -36,8 +37,9 @@ struct CalendarBodyWriteSheetView: View {
     let titleMaxLength = 20
     let textMaxLength = 200
     
-    init(showingWriteSheet: Binding<Bool>, calendarViewModel: CalendarViewModel, dateItem: DateItem) {
+    init(showingWriteSheet: Binding<Bool>, showingBottomSheet: Binding<Bool>, calendarViewModel: CalendarViewModel, dateItem: DateItem) {
         self._showingWriteSheet = showingWriteSheet
+        self._showingBottomSheet = showingBottomSheet
         self.calendarViewModel = calendarViewModel
         self.dateItem = dateItem
         self._title = State(initialValue: dateItem.getRecord()?.title ?? "")
@@ -93,6 +95,7 @@ struct CalendarBodyWriteSheetView: View {
                                         calendarViewModel.saveRecord(date: dateItem.getDate(), title: title, stamp: stamp, text: text, selectedUIImage: selectedUIImage!)
                                         calendarViewModel.setDateItem(dateItem: dateItem)
                                     } else {
+                                        showingBottomSheet.toggle()
                                         calendarViewModel.deleteRecord(dateItem: dateItem)
                                         calendarViewModel.saveRecord(date: dateItem.getDate(), title: title, stamp: stamp, text: text, selectedUIImage: selectedUIImage!)
                                         calendarViewModel.setDateItem(dateItem: dateItem)
@@ -286,7 +289,6 @@ struct CalendarBodyWriteSheetView: View {
                                         }
                                         .scrollDismissesKeyboard(.never)
                                         .padding(0)
-                                        .border(.red)
                                     
                                     if text.isEmpty {
                                         Text("남기고 싶은 메모리를 기록해보세요.")
