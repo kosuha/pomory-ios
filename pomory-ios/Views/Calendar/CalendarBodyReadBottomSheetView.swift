@@ -14,8 +14,6 @@ struct CalendarBodyReadBottomSheetView: View {
     @State private var showingWriteSheet: Bool = false
     let dateItem: DateItem
     
-    
-    
     var body: some View {
         VStack(spacing: 0) {
             RoundedRectangle(cornerRadius: 100)

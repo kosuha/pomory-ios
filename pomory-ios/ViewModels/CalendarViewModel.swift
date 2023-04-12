@@ -12,7 +12,7 @@ import PhotosUI
 class CalendarViewModel: ObservableObject {
     @Published private var selectedMonth: Date = Date()
     @Published private var dateItemList: Array<DateItem>
-    private var dateItemToRead: DateItem
+
     @Published private var recordCopy: RecordCopy?
     private var viewContext: NSManagedObjectContext
     
@@ -26,7 +26,7 @@ class CalendarViewModel: ObservableObject {
         self.selectedMonth = _selectedMonth
         self.dateItemList = []
         self.recordCopy = nil
-        self.dateItemToRead = DateItem(index: 0, date: Date())
+        
         setSelectedMonth(year: yearString, month: monthString)
         
     }

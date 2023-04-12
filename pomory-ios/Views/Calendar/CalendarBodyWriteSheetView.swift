@@ -89,13 +89,15 @@ struct CalendarBodyWriteSheetView: View {
                                 .foregroundColor(.black)
                                 .frame(width: 64, height: 64)
                                 .onTapGesture {
-                                    showingWriteSheet = false
+//                                    showingWriteSheet = false
                                     // upload action
                                     if (!isEdit) {
+                                        showingWriteSheet = false
                                         calendarViewModel.saveRecord(date: dateItem.getDate(), title: title, stamp: stamp, text: text, selectedUIImage: selectedUIImage!)
                                         calendarViewModel.setDateItem(dateItem: dateItem)
                                     } else {
-                                        showingBottomSheet.toggle()
+//                                        showingBottomSheet = false
+                                        showingWriteSheet = false
                                         calendarViewModel.deleteRecord(dateItem: dateItem)
                                         calendarViewModel.saveRecord(date: dateItem.getDate(), title: title, stamp: stamp, text: text, selectedUIImage: selectedUIImage!)
                                         calendarViewModel.setDateItem(dateItem: dateItem)

@@ -55,8 +55,9 @@ struct CalendarBodyReadSheetView: View {
                                     showingBottomSheet: $showingBottomSheet,
                                     showingReadSheet: $showingReadSheet,
 //                                    showingWriteSheet: $showingWriteSheet,
-                                    dateItem: dateItem)
-                                    .presentationDetents([.height(200)])
+                                    dateItem: dateItem
+                                )
+                                .presentationDetents([.height(200)])
                             }
                     }
                     

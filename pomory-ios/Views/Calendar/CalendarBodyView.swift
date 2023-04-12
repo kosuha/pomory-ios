@@ -9,6 +9,9 @@ import SwiftUI
 
 struct CalendarBodyView: View {
     @ObservedObject var calendarViewModel: CalendarViewModel
+    @State private var showingReadSheet = false
+    @State private var showingWriteSheet = false
+    @State private var showingBottomSheet = false
     
     var body: some View {
         VStack {
@@ -21,6 +24,17 @@ struct CalendarBodyView: View {
                             HStack {
                                 Spacer(minLength: 1)
                                 CalendarBodyDayView(calendarViewModel: calendarViewModel, dateItem: calendarViewModel.getDateItemList()[i * 7 + j])
+                                .onTapGesture {
+                                    if (isToday(date: calendarViewModel.getDateItemList()[i * 7 + j].getDate()) || isPast(date: calendarViewModel.getDateItemList()[i * 7 + j].getDate())) {
+                                        if (calendarViewModel.getDateItemList()[i * 7 + j].getRecord() != nil)
+                                        {
+                                            calendarViewModel.setRecordCopy(dateItem: calendarViewModel.getDateItemList()[i * 7 + j])
+                                            showingReadSheet.toggle()
+                                        } else {
+                                            showingWriteSheet.toggle()
+                                        }
+                                    }
+                                }
                             }
                             Spacer(minLength: 1)
                         }

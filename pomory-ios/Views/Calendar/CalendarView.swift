@@ -16,7 +16,6 @@ struct CalendarView: View {
         _calendarViewModel = StateObject(wrappedValue: CalendarViewModel(viewContext: context))
     }
 
-    
     var body: some View {
         VStack {
             CalendarTitleView(calendarViewModel: calendarViewModel)

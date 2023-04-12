@@ -15,6 +15,7 @@ struct pomory_iosApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(ViewModel())
         }
     }
 }
